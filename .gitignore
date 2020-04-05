@@ -1,3 +1,8 @@
+# by Hoshi
+config.ini
+img/
+json/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
