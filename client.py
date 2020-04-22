@@ -3,7 +3,7 @@ import re
 import dice
 import aikatsu
 
-DICE_PATTERN = r'(?P<value>\d+)d(?P<side>\d+) .*'
+DICE_PATTERN = r'(?P<value>\d+)d(?P<side>\d+) ?.*'
 IMAGE_PATH = "./img/"
 
 class MyClient(discord.Client):
