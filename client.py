@@ -4,7 +4,11 @@ import dice
 import aikatsu
 
 DICE_PATTERN = r'^(?P<value>\d+)d(?P<side>\d+)'
+AIKATSU_CMD_PATTERN = r'^!aikatsu *(?P<series>\w*)'
 IMAGE_PATH = "./img/"
+AIKATSU_FIRST = 178
+AIKATSU_STARS = 100
+AIKATSU_FRIENDS = 76
 
 class MyClient(discord.Client):
     """
@@ -29,10 +33,22 @@ class MyClient(discord.Client):
                 await message.channel.send(str(diceroll_sum))
 
         if message.content.startswith('!aikatsu'):
-            diceroll_sum = dice.diceRoll(1, 354)
+            m = re.search(AIKATSU_CMD_PATTERN, message.content)
+            if m.group('series') == 'first':
+                # 1~178
+                diceroll_sum = dice.diceRoll(1, AIKATSU_FIRST)
+            elif m.group('series') == 'stars':
+                # 179~279
+                diceroll_sum = dice.diceRoll(1, AIKATSU_STARS) + AIKATSU_FIRST
+            elif m.group('series') == 'friends':
+                # 280~354
+                diceroll_sum = dice.diceRoll(1, AIKATSU_FRIENDS) + AIKATSU_FIRST + AIKATSU_STARS
+            else:
+                # その他扱いで全話シャッフル
+                diceroll_sum = dice.diceRoll(1, 354)
+
             display_dic = aikatsu.display_aikatsu(diceroll_sum)
             img = "aikatsu_" + str(format(diceroll_sum, '03d')) + ".jpg"
-            
             # 表示
             await message.channel.send(display_dic["title"] + " 【" + display_dic["series"] + "】")
             with open( IMAGE_PATH + img, 'rb') as fp:
