@@ -3,7 +3,7 @@ import re
 import dice
 import aikatsu
 
-DICE_PATTERN = r'.*(\d)d.*(\d)'
+DICE_PATTERN = r'(?P<value>\d+)d(?P<side>\d+) .*'
 IMAGE_PATH = "./img/"
 
 class MyClient(discord.Client):
@@ -21,9 +21,12 @@ class MyClient(discord.Client):
             await message.channel.send('COCO dayo')
 
         if re.fullmatch(DICE_PATTERN,message.content) != None:
-            dice_list = message.content.split('d')
-            diceroll_sum = dice.diceRoll(int(dice_list[0]),int(dice_list[1]))
-            await message.channel.send(str(diceroll_sum))
+            # dice_list = message.content.split('d')
+            m = re.fullmatch(DICE_PATTERN,message.content)
+            if m.group('side') != '0':
+                # 0面ダイスじゃなかったら処理する
+                diceroll_sum = dice.diceRoll(int(m.group('value')),int(m.group('side')))
+                await message.channel.send(str(diceroll_sum))
 
         if message.content.startswith('!aikatsu'):
             diceroll_sum = dice.diceRoll(1, 354)
