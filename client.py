@@ -27,8 +27,8 @@ class MyClient(discord.Client):
         if re.search(DICE_PATTERN,message.content) != None:
             # dice_list = message.content.split('d')
             m = re.search(DICE_PATTERN,message.content)
-            if m.group('side') != '0':
-                # 0面ダイスじゃなかったら処理する
+            if m.group('side') != '0' and len(m.group('side')) <= 3 and len(m.group('value')) <= 3:
+                # 0面ダイス & 面数と個数が3桁以下じゃなかったら処理する
                 diceroll_sum = dice.diceRoll(int(m.group('value')),int(m.group('side')))
                 await message.channel.send(str(diceroll_sum))
 
