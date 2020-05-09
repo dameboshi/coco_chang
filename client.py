@@ -27,10 +27,11 @@ class MyClient(discord.Client):
         if re.search(DICE_PATTERN,message.content) != None:
             # dice_list = message.content.split('d')
             m = re.search(DICE_PATTERN,message.content)
-            if m.group('side') != '0' and len(m.group('side')) <= 3 and len(m.group('value')) <= 3:
-                # 0面ダイス & 面数と個数が3桁以下じゃなかったら処理する
+            try:
                 diceroll_sum = dice.diceRoll(int(m.group('value')),int(m.group('side')))
                 await message.channel.send(str(diceroll_sum))
+            except Exception as e:
+                print('error:',e)
 
         if message.content.startswith('!aikatsu'):
             m = re.search(AIKATSU_CMD_PATTERN, message.content)
