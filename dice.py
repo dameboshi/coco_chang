@@ -7,8 +7,8 @@ def diceRoll(num, max):  # ex.1d6(num=1,max=6)
     if num > 100:
         raise Exception('Dice num input Error')
 
-    # 0面以下のダイスは振らない
-    if max <= 0:
+    # 0面以下、あるいは100面より大きいダイスは振らない
+    if max <= 0 or max > 100:
         raise Exception('Dice side input Error')
     
     sum_nummber = 0
