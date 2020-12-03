@@ -9,6 +9,7 @@ IMAGE_PATH = "./img/"
 AIKATSU_FIRST = 178
 AIKATSU_STARS = 100
 AIKATSU_FRIENDS = 76
+AIKATSU_ONPARADE = 28
 
 class MyClient(discord.Client):
     """
@@ -44,9 +45,12 @@ class MyClient(discord.Client):
             elif m.group('series') == 'friends':
                 # 280~354
                 diceroll_sum = dice.diceRoll(1, AIKATSU_FRIENDS) + AIKATSU_FIRST + AIKATSU_STARS
+            elif m.group('series') == 'onparade':
+                # 355~382
+                diceroll_sum = dice.diceRoll(1, AIKATSU_ONPARADE) + AIKATSU_FIRST + AIKATSU_STARS + AIKATSU_FRIENDS
             else:
                 # その他扱いで全話シャッフル
-                diceroll_sum = dice.diceRoll(1, 354)
+                diceroll_sum = dice.diceRoll(1, 382)
 
             display_dic = aikatsu.display_aikatsu(diceroll_sum)
             img = "aikatsu_" + str(format(diceroll_sum, '03d')) + ".jpg"
