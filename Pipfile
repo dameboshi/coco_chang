@@ -7,11 +7,10 @@ verify_ssl = true
 
 [packages]
 discord = "*"
-re = "*"
 configparser = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"
 
 [scripts]
 start = "python coco_chang.py"
